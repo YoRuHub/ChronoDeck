@@ -13,6 +13,25 @@
   "activationEvents": [],
   "main": "./out/extension.js",
   "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "chronodeck-container",
+          "title": "ChronoDeck",
+          "icon": "resources/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "chronodeck-container": [
+        {
+          "type": "webview",
+          "id": "chronodeck.view",
+          "name": "ChronoDeck",
+          "icon": "resources/icon.svg"
+        }
+      ]
+    },
     "commands": [
       {
         "command": "chronodeck.open",

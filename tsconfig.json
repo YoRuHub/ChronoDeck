@@ -13,6 +13,9 @@
         "noImplicitAny": true,
         "strictNullChecks": true
     },
+    "include": [
+        "src/**/*"
+    ],
     "exclude": [
         "node_modules",
         ".vscode-test"
