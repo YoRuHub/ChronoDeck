@@ -4,6 +4,7 @@
   "description": "Date/Time Logger and Calculator",
   "version": "0.0.1",
   "publisher": "YoRuHub",
+  "license": "MIT",
   "engines": {
     "vscode": "^1.80.0"
   },

@@ -1,6 +1,15 @@
 node_modules/
 out/
+dist/
+build/
 .vscode-test/
 *.vsix
 .DS_Store
 .env
+.agent/
+.gemini/
+coverage/
+*.log
+npm-debug.log
+yarn-error.log
+test_reports/
