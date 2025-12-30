@@ -2,7 +2,8 @@
   "name": "chronodeck",
   "displayName": "ChronoDeck",
   "description": "Date/Time Logger and Calculator",
-  "version": "0.0.1",
+  "version": "0.0.2",
+  "icon": "resources/icon.png",
   "publisher": "YoRuHub",
   "license": "MIT",
   "engines": {

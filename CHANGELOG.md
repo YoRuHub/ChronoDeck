@@ -2,6 +2,11 @@
 
 All notable changes to the "ChronoDeck" extension will be documented in this file.
 
+## [0.0.2] - 2025-12-30
+
+### Fixed
+- **Marketplace Icon**: Fixed an issue where the extension icon was not displaying correctly in the Marketplace.
+
 ## [0.0.1] - 2025-12-30
 
 ### Released
