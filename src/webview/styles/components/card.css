@@ -200,6 +200,22 @@
     font-weight: 500;
 }
 
+.modern-value-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: var(--vscode-textLink-foreground);
+    font-family: 'SF Mono', Monaco, Menlo, Consolas, monospace;
+    font-size: 13px;
+    outline: none;
+    min-width: 0;
+}
+
+.modern-value-input:focus {
+    /* Optional: underline or subtle indicator */
+    text-decoration: underline;
+}
+
 .modern-copy-btn {
     opacity: 0;
     /* Hidden until hover */

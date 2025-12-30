@@ -55,10 +55,12 @@ function main() {
     if (dateInput) {
         dateInput.value = `${yyyy}/${mm}/${dd}`;
         dateInput.addEventListener('focus', () => calendar.show(dateInput));
+        dateInput.addEventListener('blur', () => { dateInput.value = toHalfWidth(dateInput.value); });
     }
 
     if (timeInput) {
         timeInput.value = "00:00:00";
+        timeInput.addEventListener('blur', () => { timeInput.value = autoFormatTime(toHalfWidth(timeInput.value)); });
     }
 
     renderHistory(store.items);
@@ -70,8 +72,12 @@ function handleAddManual() {
 
     if (!dateInput || !timeInput) return;
 
-    const dateStr = dateInput.value;
-    const timeStr = timeInput.value;
+    const dateStr = toHalfWidth(dateInput.value);
+    const timeStr = autoFormatTime(toHalfWidth(timeInput.value));
+
+    // Auto-convert for UI feedback
+    dateInput.value = dateStr;
+    timeInput.value = timeStr;
 
     const date = new Date(`${dateStr} ${timeStr}`);
 
@@ -86,14 +92,26 @@ function handleAddManual() {
     store.add(date);
 }
 
+function toHalfWidth(str) {
+    return str.replace(/[！-～]/g, s => String.fromCharCode(s.charCodeAt(0) - 0xFEE0)).replace(/　/g, " ");
+}
+
+function autoFormatTime(str) {
+    if (!str) return str;
+    const parts = str.split(':');
+    if (parts.length === 1) return `${parts[0].padStart(2, '0')}:00:00`;
+    if (parts.length === 2) return `${parts[0].padStart(2, '0')}:${parts[1].padStart(2, '0')}:00`;
+    if (parts.length === 3) return `${parts[0].padStart(2, '0')}:${parts[1].padStart(2, '0')}:${parts[2].padStart(2, '0')}`;
+    return str;
+}
+
 function renderHistory(items) {
     const list = document.getElementById("history-list");
     if (!list) return;
     list.innerHTML = "";
 
-    const sortedItems = [...items].sort((a, b) => b.date - a.date);
-
-    sortedItems.forEach(item => {
+    // Keep insertion order (newest created first)
+    items.forEach(item => {
         const card = new HistoryCard(item, i18n, store, calendar, vscode);
         list.appendChild(card.element);
     });
