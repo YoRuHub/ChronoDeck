@@ -1,0 +1,14 @@
+.vscode/**
+.vscode-test/**
+src/**
+.gitignore
+.yarnrc
+vsc-extension-quickstart.md
+**/*.map
+**/*.ts
+.agent/**
+.gemini/**
+task.md
+implementation_plan.md
+walkthrough.md
+uploaded_image_*

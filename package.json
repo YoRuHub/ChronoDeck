@@ -10,8 +10,21 @@
   "categories": [
     "Other"
   ],
+  "keywords": [
+    "time",
+    "date",
+    "timestamp",
+    "logger",
+    "converter",
+    "timezone",
+    "utility"
+  ],
   "activationEvents": [],
   "main": "./out/extension.js",
+  "bugs": {
+    "url": "https://github.com/YoRuHub/ChronoDeck/issues"
+  },
+  "homepage": "https://github.com/YoRuHub/ChronoDeck/blob/main/README.md",
   "contributes": {
     "viewsContainers": {
       "activitybar": [

@@ -11,20 +11,25 @@ It allows developers to easily record the current time or manually input dates, 
 *   **Memo Function**: Leave notes on each history card for tasks or logs.
 *   **Modern UI**: A clean, user-friendly design that integrates seamlessly with VS Code themes.
 *   **Multi-language**: Supports English and Japanese (Auto-detect).
+*   **Strict Input Mode**: Enforces valid formatting and blocks invalid characters real-time.
 
 ## Usage
 
 1.  **Open Extension**: Click the ChronoDeck icon in the Activity Bar to open the view.
 2.  **Add Entry**:
     *   Enter a Date (YYYY/MM/DD) and Time (HH:mm:ss) in the top input bar.
+    *   **Input Rules**:
+        *   Non-numeric input is strictly blocked (except valid separators).
+        *   Press `Enter` to format the value and move focus. **(Enter does NOT submit)**.
+        *   Full-width numbers are automatically converted to half-width on blur.
     *   Click the `+` button to add it to the list.
     *   Defaults to the current time.
 3.  **Manage History**:
-    *   **Expand/Collapse**: Click on a card to toggle detailed views.
-    *   **Edit**: Click the pencil icon to modify the date/time.
+    *   **Expand/Collapse**: Click on a card header to toggle detailed views. The state is guaranteed to sync.
+    *   **Edit**: Click the pencil icon to modify the date/time. Editor implements strict validation.
     *   **Delete**: Click the trash can icon to remove an entry.
     *   **Copy**: Use the copy button next to any value (Timestamp, ISO Date, etc.) to copy it to the clipboard.
-    *   **Memo**: Type notes in the text area at the bottom of the card (Auto-saves).
+    *   **Memo**: Type notes in the text area at the bottom of the card. The area is height-protected and will not collapse.
 
 ## Settings
 
