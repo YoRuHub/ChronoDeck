@@ -1,0 +1,88 @@
+/* Base Colors & Variables */
+:root {
+    --container-padding: 16px;
+    --gap-standard: 12px;
+    --radius-standard: 6px;
+    --radius-sm: 4px;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    color: var(--vscode-foreground);
+    font-size: var(--vscode-font-size);
+    font-weight: var(--vscode-font-weight);
+    font-family: var(--vscode-font-family);
+    background-color: var(--vscode-editor-background);
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+button {
+    font-family: inherit;
+}
+
+/* Manual Input Container (Top Bar) */
+#manual-input-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 16px;
+    background-color: var(--vscode-editor-background);
+    border-bottom: 1px solid var(--vscode-panel-border);
+    flex-shrink: 0;
+    z-index: 10;
+}
+
+#manual-input-container input {
+    min-width: 100px;
+    flex: 1;
+    background-color: var(--vscode-input-background) !important;
+    color: var(--vscode-input-foreground) !important;
+    border: 1px solid var(--vscode-input-border);
+    padding: 6px 8px;
+    border-radius: var(--radius-sm);
+    outline: none;
+    font-size: 13px;
+    text-align: center;
+}
+
+#manual-input-container input:focus {
+    border-color: var(--vscode-focusBorder) !important;
+    outline: 1px solid var(--vscode-focusBorder) !important;
+}
+
+#add-manual-btn {
+    background-color: var(--vscode-button-background);
+    color: var(--vscode-button-foreground);
+    border: none;
+    width: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 1;
+}
+
+#add-manual-btn:hover {
+    background-color: var(--vscode-button-hoverBackground);
+}
+
+/* History List Container */
+#history-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}

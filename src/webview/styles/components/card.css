@@ -1,0 +1,248 @@
+/* History Card Component */
+.history-card {
+    background-color: var(--vscode-editor-background);
+    border: 1px solid var(--vscode-widget-border);
+    border-radius: 8px;
+    /* Slightly more rounded for modern feel */
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0;
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.history-card:hover {
+    border-color: var(--vscode-focusBorder);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Header */
+.card-header {
+    display: flex;
+    align-items: center;
+    padding: 10px 16px;
+    background-color: var(--vscode-sideBar-background);
+    /* Subtle contrast */
+    cursor: pointer;
+    user-select: none;
+    border-bottom: 1px solid transparent;
+    transition: background-color 0.2s;
+    min-height: 44px;
+    /* Touch friendly */
+}
+
+.history-card.expanded .card-header {
+    border-bottom-color: var(--vscode-widget-border);
+}
+
+.card-header:hover {
+    background-color: var(--vscode-list-hoverBackground);
+}
+
+.chevron {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    margin-right: 12px;
+    color: var(--vscode-icon-foreground);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0.7;
+}
+
+.chevron.expanded {
+    transform: rotate(90deg);
+}
+
+.time-wrapper {
+    flex: 1;
+    min-width: 0;
+    /* Allow shrinking */
+    font-weight: 500;
+    font-size: 14px;
+    /* Slightly larger readability */
+    color: var(--vscode-editor-foreground);
+    font-variant-numeric: tabular-nums;
+    /* Align numbers */
+    display: flex;
+    align-items: center;
+}
+
+/* Header Actions */
+.header-actions {
+    display: flex;
+    gap: 8px;
+    opacity: 0.6;
+    /* Dim by default to reduce visual noise */
+    transition: opacity 0.2s;
+}
+
+.history-card:hover .header-actions {
+    opacity: 1;
+}
+
+.icon-btn {
+    background: transparent;
+    border: none;
+    color: var(--vscode-icon-foreground);
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.icon-btn:hover {
+    background-color: var(--vscode-toolbar-hoverBackground);
+    color: var(--vscode-foreground);
+    transform: translateY(-1px);
+    /* Micro interaction */
+}
+
+.icon-btn.delete:hover {
+    color: var(--vscode-errorForeground);
+    background-color: rgba(255, 100, 100, 0.1);
+}
+
+/* Edit Inputs in Header */
+.edit-wrapper {
+    display: flex;
+    gap: 8px;
+    flex: 1;
+    /* Fill remaining space instead of forcing 100% width */
+    min-width: 0;
+    /* Prevent flex blowout */
+}
+
+.edit-date-input,
+.edit-time-input {
+    background-color: var(--vscode-input-background) !important;
+    color: var(--vscode-input-foreground) !important;
+    border: 1px solid var(--vscode-input-border);
+    border-radius: 4px;
+    padding: 4px 4px;
+    min-width: 0;
+    font-family: var(--vscode-editor-font-family);
+    font-size: 13px;
+    outline: none;
+    flex: 1;
+    transition: border-color 0.2s;
+}
+
+.edit-date-input:focus,
+.edit-time-input:focus {
+    border-color: var(--vscode-focusBorder);
+}
+
+/* Body */
+.card-body {
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    /* Unified padding */
+    gap: 16px;
+    /* Space between grid and memo */
+}
+
+/* Info Grid - The "Modern" Data View */
+.info-grid-modern {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    /* Spacing between data points */
+    padding: 0;
+    /* Removing internal padding */
+    background-color: transparent;
+}
+
+.modern-info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    position: relative;
+}
+
+.modern-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    color: var(--vscode-descriptionForeground);
+    font-weight: 700;
+    letter-spacing: 1px;
+    /* Premium letter spacing */
+    opacity: 0.8;
+}
+
+.modern-value-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--vscode-textBlockQuote-background);
+    padding: 8px 10px;
+    border-radius: 6px;
+    border: 1px solid transparent;
+    transition: border-color 0.2s;
+}
+
+.modern-value-container:hover {
+    border-color: var(--vscode-focusBorder);
+    /* Hint interactivity */
+}
+
+.modern-value {
+    font-family: 'SF Mono', Monaco, Menlo, Consolas, monospace;
+    /* Prefer system mono */
+    font-size: 13px;
+    color: var(--vscode-textLink-foreground);
+    word-break: break-all;
+    font-weight: 500;
+}
+
+.modern-copy-btn {
+    opacity: 0;
+    /* Hidden until hover */
+    transform: scale(0.9);
+}
+
+.modern-value-container:hover .modern-copy-btn {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Memo Footer */
+.memo-footer {
+    display: block;
+    margin-top: 16px;
+    /* Direct separation */
+}
+
+
+.memo-input {
+    width: 100%;
+    display: block;
+    min-height: 60px;
+    background-color: var(--vscode-input-background) !important;
+    color: var(--vscode-input-foreground) !important;
+    border: 1px solid var(--vscode-input-border);
+    padding: 8px 10px;
+    font-family: var(--vscode-editor-font-family);
+    font-size: 13px;
+    border-radius: 4px;
+    resize: vertical;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.memo-input:focus {
+    outline: none;
+    border-color: var(--vscode-focusBorder);
+    box-shadow: 0 0 0 1px var(--vscode-focusBorder) inset;
+    /* Inner glow for modern focus */
+}
+
+.memo-input::placeholder {
+    color: var(--vscode-input-placeholderForeground);
+    font-style: italic;
+    opacity: 0.8;
+}

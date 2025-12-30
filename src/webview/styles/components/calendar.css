@@ -1,0 +1,70 @@
+/* Calendar Popup */
+.calendar-popup {
+    position: fixed;
+    background-color: var(--vscode-editor-background);
+    border: 1px solid var(--vscode-widget-border);
+    border-radius: var(--radius-sm);
+    padding: 8px;
+    z-index: 9999;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+    width: 220px;
+}
+
+.calendar-popup.hidden {
+    display: none;
+}
+
+.cal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    font-weight: bold;
+    font-size: 13px;
+    color: var(--vscode-foreground);
+}
+
+.cal-header button {
+    background: none;
+    border: 1px solid var(--vscode-widget-border);
+    color: var(--vscode-foreground);
+    cursor: pointer;
+    border-radius: 3px;
+    padding: 2px 8px;
+    font-size: 12px;
+}
+
+.cal-header button:hover {
+    background-color: var(--vscode-toolbar-hoverBackground);
+}
+
+.cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+    text-align: center;
+}
+
+.cal-day-name {
+    font-size: 10px;
+    color: var(--vscode-descriptionForeground);
+    margin-bottom: 4px;
+    font-weight: 600;
+}
+
+.cal-day {
+    padding: 6px 0;
+    font-size: 12px;
+    cursor: pointer;
+    border-radius: 3px;
+    color: var(--vscode-foreground);
+}
+
+.cal-day:hover:not(.empty) {
+    background-color: var(--vscode-list-hoverBackground);
+}
+
+.cal-day.empty {
+    cursor: default;
+    background: none;
+}

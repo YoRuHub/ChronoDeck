@@ -1,4 +1,5 @@
 import * as vscode from "vscode";
+// ChronoPanel handles the webview logic
 import { getUri } from "../utilities/getUri";
 
 export class ChronoPanel {

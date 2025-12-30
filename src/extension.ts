@@ -1,5 +1,6 @@
 import * as vscode from "vscode";
-import { ChronoPanel } from "./panels/ChronoPanel";
+// Main extension entry point
+import { ChronoPanel } from "./panels/chrono-panel";
 import { ChronoViewProvider } from "./providers/ChronoViewProvider";
 
 export function activate(context: vscode.ExtensionContext) {
@@ -13,6 +14,10 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(
         vscode.window.registerWebviewViewProvider(ChronoViewProvider.viewType, provider)
     );
+
+    context.subscriptions.push(vscode.commands.registerCommand("chronodeck.openSettings", () => {
+        vscode.commands.executeCommand("workbench.action.openSettings", "chronodeck");
+    }));
 
     context.subscriptions.push(helloCommand);
 }
