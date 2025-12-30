@@ -1,19 +1,26 @@
 import { I18nService } from './services/I18nService.js';
 import { HistoryStore } from './store/HistoryStore.js';
 import { Calendar } from './components/Calendar.js';
-import { HistoryCard } from './components/HistoryCard.js';
-import { SettingsModal } from './components/SettingsModal.js';
+import { HistoryList } from './components/HistoryList.js';
+import { ManualInput } from './components/ManualInput.js';
 
 const vscode = acquireVsCodeApi();
 
 let currentConfig = window.initialConfig || { language: 'auto', timezones: ['UTC'] };
 
-const store = new HistoryStore(
-    renderHistory,
-    (items) => vscode.setState({ items })
-);
+// Initialize Services first
 const i18n = new I18nService(currentConfig);
 const calendar = new Calendar();
+const historyList = new HistoryList("history-list", i18n, null, calendar, vscode); // Store injected later
+
+// Store
+const store = new HistoryStore(
+    (items) => historyList.render(items),
+    (items) => vscode.setState({ items })
+);
+
+// Inject store back into list (circular dependency handling or just pass it)
+historyList.store = store;
 
 const previousState = vscode.getState();
 if (previousState && previousState.items) {
@@ -32,105 +39,15 @@ window.addEventListener("message", event => {
             i18n.language = currentConfig.language;
             i18n.timezones = currentConfig.timezones || ['UTC'];
             i18n.locale = i18n._getLocale();
-            renderHistory(store.items);
+            historyList.render(store.items);
             break;
     }
 });
 
 function main() {
-    const addManualBtn = document.getElementById("add-manual-btn");
+    // 1. Manual Input Controller
+    new ManualInput(store, calendar);
 
-    if (addManualBtn) {
-        addManualBtn.addEventListener("click", handleAddManual);
-    }
-
-    const today = new Date();
-    const yyyy = today.getFullYear();
-    const mm = String(today.getMonth() + 1).padStart(2, '0');
-    const dd = String(today.getDate()).padStart(2, '0');
-
-    const dateInput = document.getElementById("manual-date");
-    const timeInput = document.getElementById("manual-time");
-
-    if (dateInput) {
-        dateInput.value = `${yyyy}/${mm}/${dd}`;
-        dateInput.addEventListener('focus', () => calendar.show(dateInput));
-        dateInput.addEventListener('blur', () => { dateInput.value = toHalfWidth(dateInput.value); });
-    }
-
-    if (timeInput) {
-        timeInput.value = "00:00:00";
-        timeInput.addEventListener('blur', () => { timeInput.value = autoFormatTime(toHalfWidth(timeInput.value)); });
-    }
-
-    renderHistory(store.items);
-}
-
-function handleAddManual() {
-    const dateInput = document.getElementById("manual-date");
-    const timeInput = document.getElementById("manual-time");
-
-    if (!dateInput || !timeInput) return;
-
-    const dateStr = toHalfWidth(dateInput.value);
-    const timeStr = autoFormatTime(toHalfWidth(timeInput.value));
-
-    // Auto-convert for UI feedback
-    dateInput.value = dateStr;
-    timeInput.value = timeStr;
-
-    const date = new Date(`${dateStr} ${timeStr}`);
-
-    if (isNaN(date.getTime())) {
-        if (dateStr) {
-            dateInput.style.borderColor = "var(--vscode-inputValidation-errorBorder)";
-            setTimeout(() => dateInput.style.borderColor = "", 1000);
-        }
-        return;
-    }
-
-    store.add(date);
-}
-
-function toHalfWidth(str) {
-    return str.replace(/[！-～]/g, s => String.fromCharCode(s.charCodeAt(0) - 0xFEE0)).replace(/　/g, " ");
-}
-
-function autoFormatTime(str) {
-    if (!str) return str;
-    const parts = str.split(':');
-    if (parts.length === 1) return `${parts[0].padStart(2, '0')}:00:00`;
-    if (parts.length === 2) return `${parts[0].padStart(2, '0')}:${parts[1].padStart(2, '0')}:00`;
-    if (parts.length === 3) return `${parts[0].padStart(2, '0')}:${parts[1].padStart(2, '0')}:${parts[2].padStart(2, '0')}`;
-    return str;
-}
-
-function renderHistory(items) {
-    const list = document.getElementById("history-list");
-    if (!list) return;
-    list.innerHTML = "";
-
-    // Keep insertion order (newest created first)
-    items.forEach(item => {
-        const card = new HistoryCard(item, i18n, store, calendar, vscode);
-        list.appendChild(card.element);
-    });
-}
-
-function openSettingsModal() {
-    const modal = new SettingsModal(i18n, currentConfig,
-        (newConfig) => {
-            currentConfig = newConfig;
-            vscode.postMessage({ command: 'saveConfig', config: newConfig });
-            i18n.timezones = newConfig.timezones || ['UTC'];
-            i18n.language = newConfig.language;
-            renderHistory(store.items);
-        },
-        () => {
-            if (modal.element.parentNode) {
-                document.body.removeChild(modal.element);
-            }
-        }
-    );
-    document.body.appendChild(modal.element);
+    // 2. Initial Render
+    historyList.render(store.items);
 }
