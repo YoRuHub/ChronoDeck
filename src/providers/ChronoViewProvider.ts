@@ -117,6 +117,9 @@ export class ChronoViewProvider implements vscode.WebviewViewProvider {
                             config.update("general.timezones", message.config.timezones, vscode.ConfigurationTarget.Global);
                         }
                         return;
+                    case "copyToClipboard":
+                        vscode.env.clipboard.writeText(text);
+                        return;
                 }
             }
         );

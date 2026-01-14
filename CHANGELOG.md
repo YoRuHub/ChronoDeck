@@ -2,6 +2,11 @@
 
 All notable changes to the "ChronoDeck" extension will be documented in this file.
 
+## [0.0.3] - 2026-01-15
+
+### Fixed
+- **Copy Function**: Fixed clipboard copy functionality for Unix timestamps and timezone values in history cards.
+
 ## [0.0.2] - 2025-12-30
 
 ### Fixed
